@@ -12,7 +12,7 @@
 //#define MachineCRX
 //#define MachineCRXPro
 //#define MachineCR10Max
-//#define MachineEnder5Plus
+#define MachineEnder5Plus //CM
 //#define MachineCR6
 //#define MachineCR6Max
 //#define MachineEnder6
@@ -60,7 +60,7 @@
 //#define MachineEnder3Pro422
 //#define MachineEnder3Pro427
 
-//#define PLUS // Adds bltouch, allmetal, bilinear (standard), lerdge, 93 e steps/mm
+#define PLUS //CM // Adds bltouch, allmetal, bilinear (standard), lerdge, 93 e steps/mm
 
 /*
    Hotend Type
@@ -75,7 +75,7 @@
    Creality Mounting assumes bolt-on kit
 */
 //#define HotendStock
-//#define HotendE3D
+#define HotendE3D //CM
 //#define HotendMosquito
 
 //Enable this if you have an all metal hotend capable of 300c
@@ -103,7 +103,7 @@
 
 //Stepper09Deg // 0.9 degree per step motor on the extruder - doubles ESteps
 
- //#define MicroswissDirectDrive
+ #define MicroswissDirectDrive //CM
  //#define DirectDrive // Any direct drive extruder, reduces filament change lengths
 
 /*
@@ -111,9 +111,9 @@
    ac bed, leave both disabled
 */
 //#define BedAC
-//#define BedDC
+#define BedDC //CM
 
-//#define SolidBedMounts //Removed a few LCD options to save some memory since not needed with solid mounts
+#define SolidBedMounts //CM //Removed a few LCD options to save some memory since not needed with solid mounts
 
 /*
    Choose ABL sensor type below
@@ -122,7 +122,7 @@
 //#define ABL_EZABL // TH3D EZABL or Any NO Sensor
 //#define ABL_EZABL12MM
 //#define ABL_NCSW //Creality ABL or Any NC Sensor
-//#define ABL_BLTOUCH
+#define ABL_BLTOUCH //CM
 //#define ABL_TOUCH_MI // Uncomment ABL_TOUCH_MI to use Touch-MI sensor by hotends.fr
 
 //#define Creality42XUseZMin // Use ZMin pin for probe on Creality 422 and 427 boards
@@ -148,7 +148,7 @@
 
 
 // Touchscreen options - only 32 bit boards have the open serial ports to use with graphics displays above
-//#define INSANITYAUTOMATION_DWIN
+#define INSANITYAUTOMATION_DWIN //CM
 
 //#define AddonFilSensor //Adds a filament runout sensor to the CR20 or Ender 4
 //#define lerdgeFilSensor //Using lerdge filament sensor, which is opposite polarity to stock
@@ -205,7 +205,7 @@
 //#define SKR3
 
 //#define SKRPRO11
-//#define SKRE3Turbo
+#define SKRE3Turbo //CM
 
 //#define SKRMiniE3V3
 
@@ -224,7 +224,7 @@
 //#define SKR_2130
 //#define SKR_UART // Configure SKR board with drivers in UART mode or SPI for TMC2130
 //#define SKR_ReverseSteppers // Some users reported directions backwards than others on SKR with various drivers.
-//#define DualZ // Uses 5th driver on CRX or SKR boards as Z2
+#define DualZ //CM // Uses 5th driver on CRX or SKR boards as Z2
 
 //#define PowerShutoffKit
  /*
@@ -249,7 +249,7 @@
 */
 //#define MeshFast
 //#define MeshStd
-//#define MeshFine
+#define MeshFine //CM
 //#define MeshExtreme
 
 /*
@@ -1665,9 +1665,9 @@
     #define DEFAULT_bedKi 1.17
     #define DEFAULT_bedKd 1349.52
   #else
-    #define  DEFAULT_bedKp 690.34
-    #define  DEFAULT_bedKi 111.47
-    #define  DEFAULT_bedKd 1068.83
+    #define  DEFAULT_bedKp 137.82 //CM
+    #define  DEFAULT_bedKi  21.80 //CM
+    #define  DEFAULT_bedKd 580.82 //CM
   #endif
 
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
@@ -1740,7 +1740,7 @@
  * *** IT IS HIGHLY RECOMMENDED TO LEAVE THIS OPTION ENABLED! ***
  */
 #define PREVENT_COLD_EXTRUSION
-#define EXTRUDE_MINTEMP 170
+#define EXTRUDE_MINTEMP 220 //CM
 
 /**
  * Prevent a single extrusion longer than EXTRUDE_MAXLENGTH.
@@ -2108,7 +2108,7 @@
  * :[2,3,4,5,6,7]
  */
 #if ANY(MachineEnder5Plus, CableExtensionNoiseFilter, MachineCR6, MachineCR6Max, MachineEnder6, MachineCR10Smart, MachineSermoonD1)
-  #define ENDSTOP_NOISE_THRESHOLD 2
+  #define ENDSTOP_NOISE_THRESHOLD 4 //CM
 #endif
 
 // Check for stuck or disconnected endstops during homing moves.
@@ -2143,7 +2143,7 @@
 #if ENABLED(CrealityTitan)
   #define EStepsmm 382.14
 #elif ENABLED(MicroswissDirectDrive)
-  #define EStepsmm 130
+  #define EStepsmm 400 //CM
 #elif ENABLED(BondtechLGX)
   #define EStepsmm 400
 #elif(ENABLED(BondtechBMG) || ENABLED(E3DTitan))
@@ -2617,7 +2617,7 @@
     #define NOZZLE_TO_PROBE_OFFSET { 45, 7, 0 }
   #endif
 #elif ENABLED(MicroswissDirectDrive) && ENABLED(ABL_BLTOUCH)
-  #define NOZZLE_TO_PROBE_OFFSET { -45, -5, 0 }
+  #define NOZZLE_TO_PROBE_OFFSET { -25, -29, -3.3 } //CM
 #elif ENABLED(MachineEnder3S1)
   #define NOZZLE_TO_PROBE_OFFSET { -37, -39, -2.0 }
 #elif ENABLED(MachineCR10SmartPro)
@@ -2652,19 +2652,19 @@
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
 #if ENABLED(ABL_BLTOUCH)
-  #define PROBING_MARGIN 3
+  #define PROBING_MARGIN 12 //CM
 #else
   #define PROBING_MARGIN 10
 #endif
 
 // X and Y axis travel speed (mm/min) between probes
-#define XY_PROBE_FEEDRATE (200*60)
+#define XY_PROBE_FEEDRATE (250*60) //CM
 
 // Feedrate (mm/min) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_FEEDRATE_FAST (12*60)
+#define Z_PROBE_FEEDRATE_FAST (24*60) //CM
 
 // Feedrate (mm/min) for the "accurate" probe of each point
-#define Z_PROBE_FEEDRATE_SLOW (Z_PROBE_FEEDRATE_FAST / 2)
+#define Z_PROBE_FEEDRATE_SLOW (Z_PROBE_FEEDRATE_FAST) //CM
 
 /**
  * Probe Activation Switch
@@ -2781,7 +2781,7 @@
   #define WAIT_FOR_BED_HEATER     // Wait for bed to heat back up between probes (to improve accuracy)
   #define WAIT_FOR_HOTEND         // Wait for hotend to heat back up between probes (to improve accuracy & prevent cold extrude)
 #endif
-//#define PROBING_FANS_OFF          // Turn fans off when probing
+#define PROBING_FANS_OFF //CM          // Turn fans off when probing
 //#define PROBING_ESTEPPERS_OFF     // Turn all extruder steppers off when probing
 //#define PROBING_STEPPERS_OFF      // Turn all steppers off (unless needed to hold position) when probing (including extruders)
 //#define DELAY_BEFORE_PROBING 200  // (ms) To prevent vibrations from triggering piezo sensors
@@ -3061,7 +3061,7 @@
       #define X_MAX_POS 360
     #endif
     #define Y_MAX_POS 360
-    #define ClipClearance 25
+    #define ClipClearance 10 //CM
   #elif ENABLED(MachineCR5)
     #define X_BED_SIZE 300
     #define Y_BED_SIZE 225
@@ -3169,8 +3169,8 @@
 
 // Travel limits (linear=mm, rotational=°) after homing, corresponding to endstop positions.
 #if ENABLED(MicroswissDirectDrive)
-  #define X_MIN_POS -15
-  #define Y_MIN_POS -10
+  #define X_MIN_POS 0 //CM
+  #define Y_MIN_POS 0 //CM
 #elif ENABLED(MachineEnder2Pro)
   #define X_MIN_POS -18
   #define Y_MIN_POS -2
@@ -3685,7 +3685,7 @@
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
-#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (10*60) }
+#define HOMING_FEEDRATE_MM_M { (50*60), (55*60), (24*60) } //CM
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
@@ -3808,9 +3808,9 @@
 #define PREHEAT_1_TEMP_CHAMBER 35
 #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
-#define PREHEAT_2_LABEL       "ABS"
-#define PREHEAT_2_TEMP_HOTEND 240
-#define PREHEAT_2_TEMP_BED    110
+#define PREHEAT_2_LABEL       "PETG" //CM
+#define PREHEAT_2_TEMP_HOTEND 240 //CM
+#define PREHEAT_2_TEMP_BED     50 //CM
 #define PREHEAT_2_TEMP_CHAMBER 35
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
 
@@ -3834,7 +3834,7 @@
   #if(ANY(MachineEnder2, MachineEnder2Pro))
     #define NOZZLE_PARK_POINT { (0), (0), 10 }
   #else
-    #define NOZZLE_PARK_POINT { (50), (10), 10 }
+    #define NOZZLE_PARK_POINT { (X_MIN_POS + 10), (Y_MAX_POS), 20 } //CM
   #endif
 
   #define NOZZLE_PARK_MOVE          0   // Park motion: 0 = XY Move, 1 = X Only, 2 = Y Only, 3 = X before Y, 4 = Y before X
@@ -4079,7 +4079,7 @@
  *
  * :['JAPANESE', 'WESTERN', 'CYRILLIC']
  */
-#define DISPLAY_CHARSET_HD44780 JAPANESE
+#define DISPLAY_CHARSET_HD44780 WESTERN //CM
 
 /**
  * Info Screen Style (0:Classic, 1:Průša)
@@ -4103,7 +4103,7 @@
  *
  * Use CRC checks and retries on the SD communication.
  */
-//#define SD_CHECK_AND_RETRY
+#define SD_CHECK_AND_RETRY //CM
 
 /**
  * LCD Menu Items

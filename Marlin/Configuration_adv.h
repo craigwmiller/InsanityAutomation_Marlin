@@ -305,7 +305,7 @@
  */
 #if ENABLED(THERMAL_PROTECTION_HOTENDS)
   #define THERMAL_PROTECTION_PERIOD 60        // Seconds
-  #define THERMAL_PROTECTION_HYSTERESIS 10     // Degrees Celsius
+  #define THERMAL_PROTECTION_HYSTERESIS 40 //CM     // Degrees Celsius
 
   #define ADAPTIVE_FAN_SLOWING              // Slow down the part-cooling fan if the temperature drops
   #if ENABLED(ADAPTIVE_FAN_SLOWING)
@@ -592,7 +592,7 @@
  * The fan turns on automatically whenever any driver is enabled and turns
  * off (or reduces to idle speed) shortly after drivers are turned off.
  */
-#if ANY(SKRMiniE3V2, SKRMiniE3V3)
+#if ANY(SKRMiniE3V2, SKRMiniE3V3, SKRE3Turbo) //CM
   #define USE_CONTROLLER_FAN
 #endif
 #if ENABLED(USE_CONTROLLER_FAN)
@@ -711,6 +711,8 @@
   #define E0_AUTO_FAN_PIN PC0
 #elif HOTENDS == 1 && MOTHERBOARD == BOARD_RAMPS_CREALITY
   #define E0_AUTO_FAN_PIN 7
+#elif ENABLED(SKRE3Turbo)
+  #define E0_AUTO_FAN_PIN FAN1_PIN //CM
 #endif
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
@@ -1063,7 +1065,7 @@
    * If not defined, probe limits will be used.
    * Override with 'M422 S<index> X<pos> Y<pos>'.
    */
-  //#define Z_STEPPER_ALIGN_XY { {  10, 190 }, { 100,  10 }, { 190, 190 } }
+  #define Z_STEPPER_ALIGN_XY { {  45, 175 }, { 315,  175 } } //CM
 
   /**
    * Orientation for the automatically-calculated probe positions.
@@ -1506,7 +1508,7 @@
 // @section lcd
 
 #if HAS_MANUAL_MOVE_MENU
-  #define MANUAL_FEEDRATE { 50*60, 50*60, 4*60, 2*60 } // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel
+  #define MANUAL_FEEDRATE { 50*60, 50*60, 20*60, 3*60 } //CM // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel
   #define FINE_MANUAL_MOVE 0.025    // (mm) Smallest manual move (< 0.1mm) applying to Z on most machines
   #if IS_ULTIPANEL
     #define MANUAL_E_MOVES_RELATIVE // Display extruder move distance rather than "position"
@@ -1931,7 +1933,7 @@
   //#define CONFIGURATION_EMBEDDING
 
   // Add an optimized binary file transfer mode, initiated with 'M28 B1'
-  //#define BINARY_FILE_TRANSFER
+  #define BINARY_FILE_TRANSFER //CM
 
   #if ENABLED(BINARY_FILE_TRANSFER)
     // Include extra facilities (e.g., 'M20 F') supporting firmware upload via BINARY_FILE_TRANSFER
@@ -1947,7 +1949,7 @@
    *
    * :[ 'LCD', 'ONBOARD', 'CUSTOM_CABLE' ]
    */
-  #if ANY(SKR13, SKR14, SKR14Turbo, SKRPRO11)
+  #if ANY(SKR13, SKR14, SKR14Turbo, SKRPRO11, SKRE3Turbo) //CM
     #define SDCARD_CONNECTION ONBOARD
   #endif
 
@@ -2439,7 +2441,7 @@
  * Stop after G29_MAX_RETRIES attempts.
  */
 #if ENABLED(ABL_BI) && NONE(MachineCR10Orig, LowMemoryBoard, SKRMiniE3V2, MachineCR30)
-  //#define G29_RETRY_AND_RECOVER
+  #define G29_RETRY_AND_RECOVER //CM
 #endif
 #if ENABLED(G29_RETRY_AND_RECOVER)
   #define G29_MAX_RETRIES 3
@@ -2928,7 +2930,7 @@
   #endif
   #define FILAMENT_CHANGE_UNLOAD_ACCEL        25  // (mm/s^2) Lower acceleration may allow a faster feedrate.
   #if ANY(MachineCR10SPro, MachineCR10SProV2, MachineEnder6)
-    #define FILAMENT_CHANGE_UNLOAD_LENGTH      75
+    #define FILAMENT_CHANGE_UNLOAD_LENGTH      41 //CM
   #elif ENABLED(DirectDrive)
     #define FILAMENT_CHANGE_UNLOAD_LENGTH      125
   #elif ANY(MachineEnder5Plus, MachineCR10Max, MachineCR10S4, MachineCR10S5)
@@ -3018,7 +3020,7 @@
   #define INTERPOLATE      true
 
   #if AXIS_IS_TMC_CONFIG(X)
-    #define X_CURRENT       730        // (mA) RMS current. Multiply by 1.414 for peak current.
+    #define X_CURRENT       650 //CM        // (mA) RMS current. Multiply by 1.414 for peak current.
     #define X_CURRENT_HOME  X_CURRENT  // (mA) RMS current for sensorless homing
     #define X_MICROSTEPS     16        // 0..256
     #define X_RSENSE          0.11     // Multiplied x1000 for TMC26X
@@ -3038,7 +3040,7 @@
   #endif
 
   #if AXIS_IS_TMC_CONFIG(Y)
-    #define Y_CURRENT       730
+    #define Y_CURRENT       730 //CM
     #define Y_CURRENT_HOME  Y_CURRENT
     #define Y_MICROSTEPS     16
     #define Y_RSENSE          0.11
@@ -3058,7 +3060,7 @@
   #endif
 
   #if AXIS_IS_TMC_CONFIG(Z)
-    #define Z_CURRENT       850
+    #define Z_CURRENT       600 //CM
     #define Z_CURRENT_HOME  Z_CURRENT
     #define Z_MICROSTEPS     16
     #define Z_RSENSE          0.11
@@ -3158,7 +3160,7 @@
   #endif
 
   #if AXIS_IS_TMC_CONFIG(E0)
-    #define E0_CURRENT      730
+    #define E0_CURRENT      730 //CM
     #define E0_MICROSTEPS    16
     #define E0_RSENSE         0.11
     #define E0_CHAIN_POS     -1
@@ -4070,7 +4072,7 @@
   #define CUSTOM_MENU_MAIN_ONLY_IDLE        // Only show custom menu when the machine is idle
 
   #if ENABLED(BedDC)
-    #define CommBedTmp "55"
+    #define CommBedTmp "50" //CM
   #else
     #define CommBedTmp "75"
   #endif
@@ -4086,30 +4088,51 @@
   #else
     #define PRINTTIMERSTOP "M77\n"
   #endif
+  
+  #define UserBedTemp "50"
+  #define UserHotEndTemp "240"
+  #define UserCoolingFanSpeed "200"
+  #define UserPIDCycles "8"
 
-  #define MAIN_MENU_ITEM_1_DESC "Setup"
-  #if (ENABLED(ABL_UBL))
-    #define MAIN_MENU_ITEM_1_GCODE "M190S" CommBedTmp "\nG28" DualZComm "\nG29P1\nG29P3\nG29S1\nG29S0\nG29F0.0\nG29A\nM104S215\nG28\nM109S215\nG1X150Y150F5000\nG1Z0\nM500\nM400\n" PRINTTIMERSTOP "M117 Set Z Offset"
-  #elif ENABLED(ABL_BI)
-    #define MAIN_MENU_ITEM_1_GCODE "M190S" CommBedTmp "\nG28" DualZComm "\nG29\nM400\nM104S215\nG28\nM109S215\nM420S1\nG1X100Y100F5000\nG1Z0\nM500\n" PRINTTIMERSTOP "M117 Set Z Offset"
-  #endif
-  #define MAIN_MENU_ITEM_1_CONFIRM          // Show a confirmation dialog before this action
 
-    #define MAIN_MENU_ITEM_2_DESC "PID Tune"
-    #define MAIN_MENU_ITEM_2_GCODE "M106S128\nM303C8S215E0U\nM500\nM117 PID Tune Done"
-    #define MAIN_MENU_ITEM_2_CONFIRM          // Show a confirmation dialog before this action
+  //#define MAIN_MENU_ITEM_1_DESC "Setup"
+  //#if (ENABLED(ABL_UBL))
+  //  #define MAIN_MENU_ITEM_1_GCODE "M190S" CommBedTmp "\nG28" DualZComm "\nG29P1\nG29P3\nG29S1\nG29S0\nG29F0.0\nG29A\nM104S215\nG28\nM109S215\nG1X150Y150F5000\nG1Z0\nM500\nM400\n" PRINTTIMERSTOP "M117 Set Z Offset"
+  //#elif ENABLED(ABL_BI)
+  //  #define MAIN_MENU_ITEM_1_GCODE "M190S" CommBedTmp "\nG28" DualZComm "\nG29\nM400\nM104S215\nG28\nM109S215\nM420S1\nG1X100Y100F5000\nG1Z0\nM500\n" PRINTTIMERSTOP "M117 Set Z Offset"
+  //#endif
+  //#define MAIN_MENU_ITEM_1_CONFIRM          // Show a confirmation dialog before this action
 
-    #define MAIN_MENU_ITEM_3_DESC "Prep for Z Adjust"
-    #define MAIN_MENU_ITEM_3_GCODE "M190S" CommBedTmp "\nM104S215\nG28\nG29L1\nG1 X100Y100F5000\nG1Z0"
-    #define MAIN_MENU_ITEM_3_CONFIRM          // Show a confirmation dialog before this action
+    //#define MAIN_MENU_ITEM_2_DESC "PID Tune"
+    //#define MAIN_MENU_ITEM_2_GCODE "M106S128\nM303C8S215E0U\nM500\nM117 PID Tune Done"
+    //#define MAIN_MENU_ITEM_2_CONFIRM          // Show a confirmation dialog before this action
 
-    #define MAIN_MENU_ITEM_4_DESC "Store Settings"
-    #define MAIN_MENU_ITEM_4_GCODE "M500\nM117 Settings Stored"
-    #define MAIN_MENU_ITEM_4_CONFIRM          // Show a confirmation dialog before this action
+    //#define MAIN_MENU_ITEM_3_DESC "Prep for Z Adjust"
+    //#define MAIN_MENU_ITEM_3_GCODE "M190S" CommBedTmp "\nM104S215\nG28\nG29L1\nG1 X100Y100F5000\nG1Z0"
+    //#define MAIN_MENU_ITEM_3_CONFIRM          // Show a confirmation dialog before this action
+
+    //#define MAIN_MENU_ITEM_4_DESC "Store Settings"
+    //#define MAIN_MENU_ITEM_4_GCODE "M500\nM117 Settings Stored"
+    //#define MAIN_MENU_ITEM_4_CONFIRM          // Show a confirmation dialog before this action
 
   //#define MAIN_MENU_ITEM_5_DESC "Run Mesh Validation"
   //#define MAIN_MENU_ITEM_5_GCODE "G26"
   //#define MAIN_MENU_ITEM_5_CONFIRM          // Show a confirmation dialog before this action
+
+  
+  #define MAIN_MENU_ITEM_1_DESC "Bed Auto Level" //CM
+  #define MAIN_MENU_ITEM_1_GCODE "M190S" UserBedTemp "\nG28" DualZComm "\nG29\nM400\nM104S215\nG28\nM109S215\nM420S1\nG1X100Y100F5000\nG1Z0\nM500\n" PRINTTIMERSTOP "M117 Set Z Offset" //CM
+  //#define MAIN_MENU_ITEM_1_GCODE "M190S" CommBedTmp "\nG28" DualZComm "\nG29P1\nM140S0\nM500" //CM
+  #define MAIN_MENU_ITEM_1_CONFIRM //CM
+
+  #define MAIN_MENU_ITEM_2_DESC "PID Tune - HotEnd" //CM
+  #define MAIN_MENU_ITEM_2_GCODE "M106S" UserCoolingFanSpeed "\nG28\nM303C" UserPIDCycles "S" UserHotEndTemp "E0U\nM500\nM107" //CM
+  #define MAIN_MENU_ITEM_2_CONFIRM //CM
+
+  #define MAIN_MENU_ITEM_3_DESC "PID Tune - Bed" //CM
+  #define MAIN_MENU_ITEM_3_GCODE "M106S" UserCoolingFanSpeed "\nG28\nM303C" UserPIDCycles "S" UserBedTemp "E-1U\nM500\nM107" //CM
+  #define MAIN_MENU_ITEM_3_CONFIRM //CM
+
 #endif
 
 // @section custom config menu
