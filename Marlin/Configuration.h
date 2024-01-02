@@ -113,7 +113,7 @@
 //#define BedAC
 #define BedDC //CM
 
-#define SolidBedMounts //CM //Removed a few LCD options to save some memory since not needed with solid mounts
+//#define SolidBedMounts //CM //Removed a few LCD options to save some memory since not needed with solid mounts
 
 /*
    Choose ABL sensor type below

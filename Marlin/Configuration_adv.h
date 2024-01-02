@@ -2091,7 +2091,7 @@
   #endif
 
   #if ENABLED(INSANITYAUTOMATION_DWIN) && DISABLED(Creality422, Creality427)
-    #define SERIAL_STATS_RX_BUFFER_OVERRUNS  // Fix Rx overrun situation (Currently only for AVR)
+    //#define SERIAL_STATS_RX_BUFFER_OVERRUNS //CM  // Fix Rx overrun situation (Currently only for AVR)
   #endif
   #define DGUS_UPDATE_INTERVAL_MS  500    // (ms) Interval between automatic screen updates
 
@@ -4122,16 +4122,19 @@
   
   #define MAIN_MENU_ITEM_1_DESC "Bed Auto Level" //CM
   #define MAIN_MENU_ITEM_1_GCODE "M190S" UserBedTemp "\nG28" DualZComm "\nG29\nM400\nM104S215\nG28\nM109S215\nM420S1\nG1X100Y100F5000\nG1Z0\nM500\n" PRINTTIMERSTOP "M117 Set Z Offset" //CM
-  //#define MAIN_MENU_ITEM_1_GCODE "M190S" CommBedTmp "\nG28" DualZComm "\nG29P1\nM140S0\nM500" //CM
   #define MAIN_MENU_ITEM_1_CONFIRM //CM
 
   #define MAIN_MENU_ITEM_2_DESC "PID Tune - HotEnd" //CM
-  #define MAIN_MENU_ITEM_2_GCODE "M106S" UserCoolingFanSpeed "\nG28\nM303C" UserPIDCycles "S" UserHotEndTemp "E0U\nM500\nM107" //CM
+  #define MAIN_MENU_ITEM_2_GCODE "M106S" UserCoolingFanSpeed "\nG28\nM303C" UserPIDCycles "S" UserHotEndTemp "E0U\nM500\nM107\nM117 PID Tune Done" //CM
   #define MAIN_MENU_ITEM_2_CONFIRM //CM
 
   #define MAIN_MENU_ITEM_3_DESC "PID Tune - Bed" //CM
-  #define MAIN_MENU_ITEM_3_GCODE "M106S" UserCoolingFanSpeed "\nG28\nM303C" UserPIDCycles "S" UserBedTemp "E-1U\nM500\nM107" //CM
+  #define MAIN_MENU_ITEM_3_GCODE "M106S" UserCoolingFanSpeed "\nG28\nM303C" UserPIDCycles "S" UserBedTemp "E-1U\nM500\nM107\nM117 PID Tune Done" //CM
   #define MAIN_MENU_ITEM_3_CONFIRM //CM
+
+  #define MAIN_MENU_ITEM_4_DESC "Store Settings" //CM
+  #define MAIN_MENU_ITEM_4_GCODE "M500\nM117 Settings Stored" //CM
+  #define MAIN_MENU_ITEM_4_CONFIRM //CM          // Show a confirmation dialog before this action
 
 #endif
 
